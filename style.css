@@ -16,3 +16,11 @@
   height: 2.2rem;
   border: 1px solid black;
 }
+
+.startingNode {
+  background-color: rgb(21, 141, 31);
+}
+
+.endingNode {
+  background-color: crimson;
+}
