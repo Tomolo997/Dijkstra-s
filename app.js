@@ -9,7 +9,13 @@ function grid() {
   for (let i = 0; i < ROWS; i++) {
     for (let j = 0; j < COLS; j++) {
       const div = document.createElement('div');
-      nodes.push({ name: div, row: i, col: j, isWall: false });
+      nodes.push({
+        name: div,
+        row: i,
+        col: j,
+        isWall: false,
+        isVisited: false,
+      });
       div.classList.add('node');
       container.append(div);
     }
