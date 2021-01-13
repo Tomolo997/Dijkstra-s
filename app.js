@@ -33,3 +33,10 @@ function setEndingPoint(rows, cols) {
 }
 setStartingPoint(12, 3);
 setEndingPoint(1, 12);
+
+//when i click the node it must log
+nodes.forEach((el) =>
+  el.name.addEventListener('mousemove', function (e) {
+    e.target.classList.add('wall');
+  })
+);
