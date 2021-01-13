@@ -9,7 +9,7 @@ function grid() {
   for (let i = 0; i < ROWS; i++) {
     for (let j = 0; j < COLS; j++) {
       const div = document.createElement('div');
-      nodes.push({ name: div, row: i, col: j });
+      nodes.push({ name: div, row: i, col: j, isWall: false });
       div.classList.add('node');
       container.append(div);
     }
@@ -35,8 +35,30 @@ setStartingPoint(12, 3);
 setEndingPoint(1, 12);
 
 //when i click the node it must log
-nodes.forEach((el) =>
-  el.name.addEventListener('mousemove', function (e) {
-    e.target.classList.add('wall');
-  })
-);
+let mouseisDown = false;
+let clicked = false;
+document.body.addEventListener('mousedown', function () {
+  mouseisDown = true;
+});
+
+document.body.addEventListener('mouseup', function () {
+  mouseisDown = false;
+});
+function mouseDraw() {
+  nodes.forEach((el) =>
+    el.name.addEventListener('mousemove', function (e) {
+      if (
+        mouseisDown &&
+        !el.name.classList.contains('startingNode') &&
+        !el.name.classList.contains('endingNode')
+      ) {
+        e.target.classList.add('wall');
+      }
+      el.isWall = true;
+    })
+  );
+}
+function drawWall() {
+  mouseDraw();
+}
+drawWall();
