@@ -22,7 +22,7 @@
 }
 
 .endingNode {
-  background-color: crimson;
+  background-color: crimson !important;
 }
 
 .wall {
