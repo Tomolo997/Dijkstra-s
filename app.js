@@ -94,12 +94,34 @@ function obarvajNode(arr, startingNodeX, startingNodeY) {
   const startingNode = arr.find(
     (el) => el.row === startingNodeX && el.col === startingNodeY
   );
+  let currentX = startingNode.row;
+  let currentY = startingNode.col;
   console.log(startingNode);
+  let j = 0;
+  let y = 0;
 
-  for (let i = 0; i < arr.length; i++) {
-    const element = arr[i];
-    console.log(element);
-  }
+  const neighbours = findNeighours(arr, currentX, currentY);
+
+  neighbours.forEach((el) => (el.name.style.backgroundColor = 'red'));
 }
 
 obarvajNode(nodes, 12, 3);
+
+function findNeighours(arr, currentNodeX, currentNodeY) {
+  const xCoord = currentNodeX;
+  const yCoord = currentNodeY;
+  const leftNeigbour = arr.find(
+    (el) => el.row === xCoord - 1 && el.col === yCoord
+  );
+  const upNeigbour = arr.find(
+    (el) => el.row === xCoord && el.col === yCoord + 1
+  );
+  const downNeigbour = arr.find(
+    (el) => el.row === xCoord && el.col === yCoord - 1
+  );
+  const rightNeigbour = arr.find(
+    (el) => el.row === xCoord + 1 && el.col === yCoord
+  );
+
+  return [leftNeigbour, rightNeigbour, upNeigbour, downNeigbour];
+}

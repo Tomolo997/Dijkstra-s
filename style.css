@@ -28,3 +28,7 @@
 .wall {
   background-color: rgb(55, 55, 80);
 }
+
+.visited {
+  background-color: blue;
+}
