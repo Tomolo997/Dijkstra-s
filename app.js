@@ -16,6 +16,7 @@ function grid() {
         isWall: false,
         isVisited: false,
         tentativeDistance: Infinity,
+        previousNode: null,
       });
       div.classList.add('node');
       container.append(div);
@@ -26,6 +27,7 @@ function grid() {
 function init() {
   grid();
   makeSet();
+  setEndingPoint(12, 16);
 }
 init();
 function makeSet() {
@@ -42,6 +44,7 @@ function setStartingPoint(rows, cols) {
   const startingNode = nodes.find((el) => el.row === rows && el.col === cols);
   startingNode.name.classList.add('startingNode');
   startingNode.tentativeDistance = 0;
+  return startingNode;
 }
 
 function setEndingPoint(rows, cols) {
@@ -49,10 +52,6 @@ function setEndingPoint(rows, cols) {
   endingNode.name.classList.add('endingNode');
   endingNode.endingNode = true;
 }
-
-console.log(nodes);
-setStartingPoint(12, 3);
-setEndingPoint(1, 12);
 
 //when i click the node it must log
 let mouseisDown = false;
@@ -89,15 +88,24 @@ drawWall();
 // }, 100);
 
 //iterate skozi vse neighboure in jih pobarvaj rdeco
+const startingPoins = setStartingPoint(12, 3);
 
-console.log(nodes);
+function dijkstra(grid, startNode, endNode) {
+  //getting the starting node in the grid for dijkstra
+  const startingNode = grid.find(
+    (el) => el.row === startNode.row && el.col === startNode.col
+  );
 
-function dijkstra(grid, startNode, endNode) {}
+  //vse node ki so unvisited => ivsited 0 false
+  const unvisitedNodes = grid;
 
+  return !!unvisitedNodes.length;
+}
+console.log(dijkstra(nodes, startingPoins));
+// Najdemo neighboure
 function findNeigbours(currentNode, grid) {
   const neigbours = [];
   const { row, col } = currentNode;
-  console.log(row, col);
   //dobi vse 4 neighnoure
   //zgornji neighbour
   if (row > -1)
@@ -114,5 +122,13 @@ function findNeigbours(currentNode, grid) {
   //spodnji neighbour
   return neigbours;
 }
-
-console.log(findNeigbours(nodes[52], nodes));
+console.log(startingPoins);
+//updejtamo neighboure
+function updateNeighbours(node, grid) {
+  const neigbours = findNeigbours(node, grid);
+  for (const neigh of neigbours) {
+    neigh.tentativeDistance = node.tentativeDistance + 1;
+  }
+  return neigbours.filter((el) => !el.isVisited);
+}
+console.log(updateNeighbours(startingPoins, nodes));
