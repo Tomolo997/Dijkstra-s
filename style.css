@@ -18,7 +18,7 @@
 }
 
 .startingNode {
-  background-color: rgb(21, 141, 31);
+  background-color: rgb(21, 141, 31) !important;
 }
 
 .endingNode {

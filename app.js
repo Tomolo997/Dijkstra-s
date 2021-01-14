@@ -2,7 +2,7 @@
 const container = document.querySelector('.container');
 console.log(container);
 //make a grid
-const nodes = [];
+export const nodes = [];
 const COLS = 20;
 const ROWS = 20;
 function grid() {
@@ -90,49 +90,29 @@ drawWall();
 
 //iterate skozi vse neighboure in jih pobarvaj rdeco
 
-function obarvajNode(arr, startingNodeX, startingNodeY) {
-  const startingNode = arr.find(
-    (el) => el.row === startingNodeX && el.col === startingNodeY
-  );
-  let currentX = startingNode.row;
-  let currentY = startingNode.col;
-  console.log(startingNode);
-  let j = 0;
-  let y = 0;
+console.log(nodes);
 
-  const neighbours = findNeighours(arr, currentX, currentY);
+function dijkstra(grid, startNode, endNode) {}
 
-  neighbours.forEach((el) => (el.name.style.backgroundColor = 'red'));
-  while (j < 10) {
-    for (let i = 0; i < neighbours.length; i++) {
-      const nextNeigbours = findNeighours(
-        arr,
-        neighbours[i].row,
-        neighbours[i].col
-      );
-      nextNeigbours.forEach((el) => (el.name.style.backgroundColor = 'red'));
-    }
-    j++;
-  }
+function findNeigbours(currentNode, grid) {
+  const neigbours = [];
+  const { row, col } = currentNode;
+  console.log(row, col);
+  //dobi vse 4 neighnoure
+  //zgornji neighbour
+  if (row > -1)
+    neigbours.push(grid.find((el) => el.row === row - 1 && el.col === col));
+  //spodnji neighbour
+  if (row < grid.length - 1)
+    neigbours.push(grid.find((el) => el.row === row + 1 && el.col === col));
+  //levi neighbour
+  if (col > -1)
+    neigbours.push(grid.find((el) => el.row === row && el.col === col - 1));
+  //desen Neigbour
+  if (col < grid.length - 1)
+    neigbours.push(grid.find((el) => el.row === row && el.col === col + 1));
+  //spodnji neighbour
+  return neigbours;
 }
 
-obarvajNode(nodes, 12, 3);
-
-function findNeighours(arr, currentNodeX, currentNodeY) {
-  const xCoord = currentNodeX;
-  const yCoord = currentNodeY;
-  const leftNeigbour = arr.find(
-    (el) => el.row === xCoord - 1 && el.col === yCoord
-  );
-  const upNeigbour = arr.find(
-    (el) => el.row === xCoord && el.col === yCoord + 1
-  );
-  const downNeigbour = arr.find(
-    (el) => el.row === xCoord && el.col === yCoord - 1
-  );
-  const rightNeigbour = arr.find(
-    (el) => el.row === xCoord + 1 && el.col === yCoord
-  );
-
-  return [leftNeigbour, rightNeigbour, upNeigbour, downNeigbour];
-}
+console.log(findNeigbours(nodes[52], nodes));
