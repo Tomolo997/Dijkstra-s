@@ -103,6 +103,17 @@ function obarvajNode(arr, startingNodeX, startingNodeY) {
   const neighbours = findNeighours(arr, currentX, currentY);
 
   neighbours.forEach((el) => (el.name.style.backgroundColor = 'red'));
+  while (j < 10) {
+    for (let i = 0; i < neighbours.length; i++) {
+      const nextNeigbours = findNeighours(
+        arr,
+        neighbours[i].row,
+        neighbours[i].col
+      );
+      nextNeigbours.forEach((el) => (el.name.style.backgroundColor = 'red'));
+    }
+    j++;
+  }
 }
 
 obarvajNode(nodes, 12, 3);
