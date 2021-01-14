@@ -27,7 +27,6 @@ function grid() {
 function init() {
   grid();
   makeSet();
-  setEndingPoint(12, 16);
 }
 init();
 function makeSet() {
@@ -51,6 +50,7 @@ function setEndingPoint(rows, cols) {
   const endingNode = nodes.find((el) => el.row === rows && el.col === cols);
   endingNode.name.classList.add('endingNode');
   endingNode.endingNode = true;
+  return endingNode;
 }
 
 //when i click the node it must log
@@ -89,20 +89,30 @@ drawWall();
 
 //iterate skozi vse neighboure in jih pobarvaj rdeco
 const startingPoins = setStartingPoint(12, 3);
-
+const endPoint = setEndingPoint(12, 15);
 function dijkstra(grid, startNode, endNode) {
   //getting the starting node in the grid for dijkstra
-  const startingNode = grid.find(
-    (el) => el.row === startNode.row && el.col === startNode.col
-  );
-
+  const visitedNodes = [];
+  startNode.tentativeDistance = 0;
   //vse node ki so unvisited => ivsited 0 false
   const unvisitedNodes = grid;
 
-  return !!unvisitedNodes.length;
+  //dokler obstaja unvisitedNodes , je več kot 0
+  while (!!unvisitedNodes.length) {
+    //sortaj po distanci node
+    sortNodes(unvisitedNodes);
+    //vzami ven prvega
+    const closestNode = unvisitedNodes.shift();
+    //dodaj mu visited
+    closestNode.isVisited = true;
+    visitedNodes.push(closestNode);
+    if (closestNode === endNode) return visitedNodes;
+    updateNeighbours(closestNode, grid);
+  }
 }
-console.log(dijkstra(nodes, startingPoins));
 // Najdemo neighboure
+console.log(dijkstra(nodes, startingPoins, endPoint));
+
 function findNeigbours(currentNode, grid) {
   const neigbours = [];
   const { row, col } = currentNode;
@@ -120,15 +130,33 @@ function findNeigbours(currentNode, grid) {
   if (col < grid.length - 1)
     neigbours.push(grid.find((el) => el.row === row && el.col === col + 1));
   //spodnji neighbour
-  return neigbours;
+  const yea = neigbours.filter((el) => el !== undefined);
+  return yea.filter((neighbor) => !neighbor.isVisited);
 }
-console.log(startingPoins);
 //updejtamo neighboure
 function updateNeighbours(node, grid) {
   const neigbours = findNeigbours(node, grid);
   for (const neigh of neigbours) {
+    if (neigh === undefined) continue;
     neigh.tentativeDistance = node.tentativeDistance + 1;
+    neigh.previousNode = node;
   }
-  return neigbours.filter((el) => !el.isVisited);
 }
-console.log(updateNeighbours(startingPoins, nodes));
+
+//sortamo node pos distancih
+function sortNodes(nodesToSort) {
+  nodesToSort.sort((a, b) => {
+    a.tentativeDistance - b.tentativeDistance;
+  });
+}
+
+function getNodesInShortestPathOrder(finishNode) {
+  const nodesInShortestPathOrder = [];
+  let currentNode = finishNode;
+  while (currentNode !== null) {
+    nodesInShortestPathOrder.unshift(currentNode);
+    currentNode = currentNode.previousNode;
+  }
+  return nodesInShortestPathOrder;
+}
+console.log(getNodesInShortestPathOrder(endPoint));
