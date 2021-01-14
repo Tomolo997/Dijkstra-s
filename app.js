@@ -15,12 +15,18 @@ function grid() {
         col: j,
         isWall: false,
         isVisited: false,
+        tentativeDistance: Infinity,
       });
       div.classList.add('node');
       container.append(div);
     }
   }
-  console.log(nodes);
+  const unVisited = new Set();
+  nodes.forEach((el) => {
+    if (!el.isVisited) {
+      unVisited.add(el);
+    }
+  });
 }
 
 function init() {
@@ -31,6 +37,7 @@ init();
 function setStartingPoint(rows, cols) {
   const startingNode = nodes.find((el) => el.row === rows && el.col === cols);
   startingNode.name.classList.add('startingNode');
+  startingNode.tentativeDistance = 0;
 }
 
 function setEndingPoint(rows, cols) {
@@ -68,3 +75,8 @@ function drawWall() {
   mouseDraw();
 }
 drawWall();
+
+//djkstra Algo
+// const t = setInterval(() => {
+//   nodes.forEach((el) => (el.name.style.backgroundColor = 'blue'));
+// }, 100);
