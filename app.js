@@ -29,7 +29,6 @@ function init() {
   //return
 }
 init();
-console.log(nodes);
 function setStartingPoint(rows, cols) {
   const startingNode = nodes.find((el) => el.row === rows && el.col === cols);
   startingNode.name.classList.add('startingNode');
@@ -82,76 +81,20 @@ drawWall();
 let endPoint = setEndingPoint(12, 16);
 let startingPoins = setStartingPoint(12, 3);
 
-function dijkstra(grid, startNode, endNode) {
-  //getting the starting node in the grid for dijkstra
-  const visitedNodes = [];
-  startNode.tentativeDistance = 0;
+// Nodes => nodes !
 
-  //vse node ksi so unvisited => ivsited 0 false
-  const unvisitedNodes = nodes;
-  //dokler obstaja unvisitedNodes , je več kot 0
-  while (!!unvisitedNodes.length) {
-    //sortaj po distanci node
-    sortNodes(unvisitedNodes);
-    //vzami ven prvega
-    const closestNode = unvisitedNodes.shift();
-    //dodaj mu visited
-    closestNode.isVisited = true;
-    console.log(closestNode);
-    visitedNodes.push(closestNode);
-    if (closestNode === endNode) return visitedNodes;
-    updateNeighbours(closestNode, nodes);
-  }
-}
-// Najdemo neighboure
-function findNeigbours(currentNode, grid) {
-  const neigbours = [];
+//find neighbbour
+
+function findNeighbour(currentNode, grid) {
+  const neighbours = [];
   const { row, col } = currentNode;
 
-  console.log(nodes.find((el) => el.row === row + 1 && el.col === col));
-  //dobi vse 4 neighnoure
-  //zgornji neighbour
-  if (row > 0)
-    neigbours.push(nodes.find((el) => el.row === row - 1 && el.col === col));
-  //spodnji neighbour
-  if (row < grid.length - 1)
-    neigbours.push(nodes.find((el) => el.row === row + 1 && el.col === col));
-  //levi neighbour
-  if (col > -1)
-    neigbours.push(nodes.find((el) => el.row === row && el.col === col + 1));
+  //najdemo leve, desne neighgboure v nodes !
+  neighbours.push(nodes.find((el) => el.row === row - 1 && el.col === col));
+  neighbours.push(nodes.find((el) => el.row === row + 1 && el.col === col));
+  neighbours.push(nodes.find((el) => el.row === row && el.col === col - 1));
+  neighbours.push(nodes.find((el) => el.row === row && el.col === col + 1));
 
-  //desen Neigbour
-  if (col < grid.length - 1)
-    neigbours.push(nodes.find((el) => el.row === row && el.col === col - 1));
-  //spodnji neighbour
-  console.log(neigbours);
-  return neigbours;
+  return neighbours;
 }
-
-//updejtamo neighboure
-function updateNeighbours(node, nodes) {
-  const neigbours = findNeigbours(node, nodes);
-  for (const neigh of neigbours) {
-    neigh.tentativeDistance = node.tentativeDistance + 1;
-    neigh.previousNode = node;
-  }
-}
-
-//sortamo node pos distancih
-function sortNodes(nodesToSort) {
-  nodesToSort.sort((a, b) => {
-    b.tentativeDistance - a.tentativeDistance;
-  });
-}
-
-function getNodesInShortestPathOrder(finishNode) {
-  const nodesInShortestPathOrder = [];
-  let currentNode = finishNode;
-  while (currentNode !== null) {
-    nodesInShortestPathOrder.unshift(currentNode);
-    currentNode = currentNode.previousNode;
-  }
-  return nodesInShortestPathOrder;
-}
-console.log(dijkstra(nodesArray, startingPoins, endPoint));
-console.log(getNodesInShortestPathOrder(endPoint));
+console.log(findNeighbour(startingPoins, nodes));
