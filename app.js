@@ -114,14 +114,26 @@ function dijkstra(grid, startingNode, endNode) {
     //dodatamo closestnNodu visited =! true
     closestNode.isVisited = true;
     console.log(closestNode);
-    closestNode.name.classList.add('wall');
+
+    //dodamo wall ==>
+    if (closestNode.isWall) continue;
+
     //če je closest node enak end nodu potem je SUCCSESS
+    closestNode.name.classList.add('visited');
     if (closestNode === endNode) return 'yea';
     //updejtamo neighboure
     updateNeighbours(closestNode, nodes);
   }
 }
-console.log(dijkstra(nodes, startingPoins, endPoint));
+
+const start = document.querySelector('.startDijsktra');
+
+start.addEventListener('click', function (e) {
+  dijkstra(nodes, startingPoins, endPoint);
+
+  const shortestPath = getNodesInShortestPath(endPoint);
+  shortestPath.forEach((el) => el.name.classList.add('shoretstPath'));
+});
 
 //sortamo node, da dobimo 0 na začetku !
 function sortNodes(unvisitedNodes) {
@@ -134,4 +146,17 @@ function updateNeighbours(closestNode, grid) {
     neighbour.tentativeDistance = closestNode.tentativeDistance + 1;
     neighbour.previousNode = closestNode;
   }
+}
+
+//returnati moramo shortest path =>
+function getNodesInShortestPath(startNode) {
+  const nodesShoretes = [];
+  let currentNode = startNode;
+  while (currentNode !== null) {
+    //dodamo na začezek
+    nodesShoretes.unshift(currentNode);
+    currentNode = currentNode.previousNode;
+  }
+
+  return nodesShoretes;
 }

@@ -32,3 +32,13 @@
 .visited {
   background-color: blue;
 }
+
+.start__button {
+  position: absolute;
+  right: 15rem;
+  top: 25rem;
+}
+
+.shoretstPath {
+  background-color: aqua;
+}
