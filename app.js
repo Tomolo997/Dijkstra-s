@@ -32,7 +32,6 @@ init();
 function setStartingPoint(rows, cols) {
   const startingNode = nodes.find((el) => el.row === rows && el.col === cols);
   startingNode.name.classList.add('startingNode');
-  startingNode.tentativeDistance = 0;
   return startingNode;
 }
 
@@ -79,13 +78,13 @@ drawWall();
 //iterate skozi vse neighboure in jih pobarvaj rdeco
 
 let endPoint = setEndingPoint(12, 16);
-let startingPoins = setStartingPoint(0, 0);
+let startingPoins = setStartingPoint(12, 3);
 
 // Nodes => nodes !
 
 //find neighbbour
 
-function findNeighbour(currentNode, grid) {
+function findNeighbour(currentNode) {
   const neighbours = [];
   const { row, col } = currentNode;
 
@@ -99,3 +98,25 @@ function findNeighbour(currentNode, grid) {
   return neighbours.filter((el) => el !== undefined);
 }
 console.log(findNeighbour(startingPoins, nodes));
+
+function dijkstra(grid, startingNode, endNode) {
+  const visitedNodes = [];
+  startingNode.tentativeDistance = 0;
+  const UNVisitedNodes = grid;
+
+  //dokler ni prazna !
+  while (!!UNVisitedNodes.length) {
+    //sortamo node po distance => 0 gre na začetek za začetek, tako dobimo starting node kak začetek
+    sortNodes(UNVisitedNodes);
+    const closestNode = UNVisitedNodes.shift();
+  }
+
+  console.log(UNVisitedNodes);
+}
+
+dijkstra(nodes, startingPoins);
+
+//sortamo node, da dobimo 0 na začetku !
+function sortNodes(unvisitedNodes) {
+  unvisitedNodes.sort((a, b) => a.tentativeDistance - b.tentativeDistance);
+}
