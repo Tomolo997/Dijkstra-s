@@ -60,6 +60,7 @@ function mouseDraw() {
         !el.name.classList.contains('endingNode')
       ) {
         e.target.classList.add('wall');
+        e.target.isVisited = true;
       }
       el.isWall = true;
     })
@@ -96,10 +97,9 @@ function findNeighbour(currentNode) {
   neighbours.push(nodes.find((el) => el.row === row && el.col === col + 1));
 
   return neighbours
-    .filter((el) => el !== undefined)
+    .filter((el) => el != undefined)
     .filter((el) => (el.isVisited = true));
 }
-console.log(findNeighbour(startingPoins, nodes));
 
 function dijkstra(grid, startingNode, endNode) {
   const visitedNodes = [];
@@ -130,9 +130,10 @@ const start = document.querySelector('.startDijsktra');
 
 start.addEventListener('click', function (e) {
   dijkstra(nodes, startingPoins, endPoint);
-
-  const shortestPath = getNodesInShortestPath(endPoint);
-  shortestPath.forEach((el) => el.name.classList.add('shoretstPath'));
+  setTimeout(() => {
+    const shortestPath = getNodesInShortestPath(endPoint);
+    shortestPath.forEach((el) => el.name.classList.add('shoretstPath'));
+  }, 1000);
 });
 
 //sortamo node, da dobimo 0 na začetku !
