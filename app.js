@@ -79,7 +79,7 @@ drawWall();
 //iterate skozi vse neighboure in jih pobarvaj rdeco
 
 let endPoint = setEndingPoint(12, 16);
-let startingPoins = setStartingPoint(12, 3);
+let startingPoins = setStartingPoint(0, 0);
 
 // Nodes => nodes !
 
@@ -90,11 +90,12 @@ function findNeighbour(currentNode, grid) {
   const { row, col } = currentNode;
 
   //najdemo leve, desne neighgboure v nodes !
+
   neighbours.push(nodes.find((el) => el.row === row - 1 && el.col === col));
   neighbours.push(nodes.find((el) => el.row === row + 1 && el.col === col));
   neighbours.push(nodes.find((el) => el.row === row && el.col === col - 1));
   neighbours.push(nodes.find((el) => el.row === row && el.col === col + 1));
 
-  return neighbours;
+  return neighbours.filter((el) => el !== undefined);
 }
 console.log(findNeighbour(startingPoins, nodes));
