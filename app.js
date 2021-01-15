@@ -26,23 +26,10 @@ function grid() {
 function init() {
   grid();
   setEndingPoint(12, 16);
-
   //return
 }
 init();
-
-function getGrid(grid) {
-  const nodes = [];
-  console.log(grid);
-  for (let i = 0; i < ROWS; i++) {
-    for (let j = 0; j < COLS; j++) {
-      nodes.push([grid[i].row, grid[j].col]);
-    }
-  }
-  return nodes;
-}
-const nodesArray = getGrid(nodes);
-
+console.log(nodes);
 function setStartingPoint(rows, cols) {
   const startingNode = nodes.find((el) => el.row === rows && el.col === cols);
   startingNode.name.classList.add('startingNode');
@@ -59,7 +46,6 @@ function setEndingPoint(rows, cols) {
 
 //when i click the node it must log
 let mouseisDown = false;
-let clicked = false;
 document.body.addEventListener('mousedown', function () {
   mouseisDown = true;
 });
@@ -92,6 +78,7 @@ drawWall();
 // }, 100);
 
 //iterate skozi vse neighboure in jih pobarvaj rdeco
+
 let endPoint = setEndingPoint(12, 16);
 let startingPoins = setStartingPoint(12, 3);
 
@@ -101,7 +88,7 @@ function dijkstra(grid, startNode, endNode) {
   startNode.tentativeDistance = 0;
 
   //vse node ksi so unvisited => ivsited 0 false
-  const unvisitedNodes = nodesArray;
+  const unvisitedNodes = nodes;
   //dokler obstaja unvisitedNodes , je več kot 0
   while (!!unvisitedNodes.length) {
     //sortaj po distanci node
@@ -110,33 +97,40 @@ function dijkstra(grid, startNode, endNode) {
     const closestNode = unvisitedNodes.shift();
     //dodaj mu visited
     closestNode.isVisited = true;
-
+    console.log(closestNode);
     visitedNodes.push(closestNode);
     if (closestNode === endNode) return visitedNodes;
-    updateNeighbours(closestNode, grid);
+    updateNeighbours(closestNode, nodes);
   }
 }
 // Najdemo neighboure
 function findNeigbours(currentNode, grid) {
   const neigbours = [];
   const { row, col } = currentNode;
+
+  console.log(nodes.find((el) => el.row === row + 1 && el.col === col));
   //dobi vse 4 neighnoure
   //zgornji neighbour
-  if (row > 0) neigbours.push(grid[row - 1][col]);
+  if (row > 0)
+    neigbours.push(nodes.find((el) => el.row === row - 1 && el.col === col));
   //spodnji neighbour
-  if (row < grid.length - 1) neigbours.push(grid[row + 1][col]);
+  if (row < grid.length - 1)
+    neigbours.push(nodes.find((el) => el.row === row + 1 && el.col === col));
   //levi neighbour
-  if (col > 0) neigbours.push(grid[row][col - 1]);
+  if (col > -1)
+    neigbours.push(nodes.find((el) => el.row === row && el.col === col + 1));
+
   //desen Neigbour
-  if (col < grid.length - 1) neigbours.push(grid[row][col + 1]);
+  if (col < grid.length - 1)
+    neigbours.push(nodes.find((el) => el.row === row && el.col === col - 1));
   //spodnji neighbour
   console.log(neigbours);
-  return neigbours.filter((neighbor) => !neighbor.isVisited);
+  return neigbours;
 }
 
 //updejtamo neighboure
-function updateNeighbours(node, nodesArray) {
-  const neigbours = findNeigbours(node, nodesArray);
+function updateNeighbours(node, nodes) {
+  const neigbours = findNeigbours(node, nodes);
   for (const neigh of neigbours) {
     neigh.tentativeDistance = node.tentativeDistance + 1;
     neigh.previousNode = node;
