@@ -39,6 +39,20 @@
   top: 25rem;
 }
 
+.startDijsktra {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  background-color: red;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.startDijsktra:hover {
+  background-color: white;
+  color: red;
+  border: 1px solid red;
+}
 .shoretstPath {
   background-color: yellow;
 }
