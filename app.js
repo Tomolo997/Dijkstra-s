@@ -60,9 +60,7 @@ function mouseDraw() {
         !el.name.classList.contains('endingNode')
       ) {
         e.target.classList.add('wall');
-        e.target.isVisited = true;
       }
-      el.isWall = true;
     })
   );
 }
@@ -91,13 +89,15 @@ function findNeighbour(currentNode) {
 
   //najdemo leve, desne neighgboure v nodes !
 
+  console.log(currentNode);
+
   neighbours.push(nodes.find((el) => el.row === row - 1 && el.col === col));
   neighbours.push(nodes.find((el) => el.row === row + 1 && el.col === col));
   neighbours.push(nodes.find((el) => el.row === row && el.col === col - 1));
   neighbours.push(nodes.find((el) => el.row === row && el.col === col + 1));
-
+  console.log(neighbours);
   return neighbours
-    .filter((el) => el != undefined)
+    .filter((el) => el !== undefined)
     .filter((el) => (el.isVisited = true));
 }
 
@@ -111,12 +111,12 @@ function dijkstra(grid, startingNode, endNode) {
     //sortamo node po distance => 0 gre na začetek za začetek, tako dobimo starting node kak začetek
     sortNodes(UNVisitedNodes);
     const closestNode = UNVisitedNodes.shift();
-    //dodatamo closestnNodu visited =! true
+    console.log(closestNode.isVisited);
     closestNode.isVisited = true;
-    console.log(closestNode);
+    //dodatamo closestnNodu visited =! true
 
     //dodamo wall ==>
-    if (closestNode.isWall) continue;
+    if (closestNode.name.classList.contains('wall')) continue;
 
     //če je closest node enak end nodu potem je SUCCSESS
     closestNode.name.classList.add('visited');
@@ -161,3 +161,5 @@ function getNodesInShortestPath(startNode) {
 
   return nodesShoretes;
 }
+
+function AnimateDijsktra(time) {}
