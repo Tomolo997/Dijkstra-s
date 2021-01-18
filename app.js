@@ -9,6 +9,8 @@ function grid() {
   for (let i = 0; i < ROWS; i++) {
     for (let j = 0; j < COLS; j++) {
       const div = document.createElement('div');
+      div.setAttribute('data-row', i);
+      div.setAttribute('data-col', j);
       nodes.push({
         name: div,
         row: i,
@@ -77,23 +79,6 @@ drawWall();
 
 let endPoint = setEndingPoint(10, 16);
 let startingPoins = setStartingPoint(3, 3);
-
-const setStartingNode = document.querySelector('.setUpStartButton');
-
-setStartingNode.addEventListener('click', function (e) {
-  console.log(e);
-});
-
-const startingNode = document.querySelector('.startingNode');
-startingNode.addEventListener('mousedown', function (e) {
-  let mouseisDown = false;
-  document.body.addEventListener('mousedown', function () {});
-
-  document.body.addEventListener('mouseup', function () {
-    mouseisDown = false;
-    e.target.classList.add('startingNode');
-  });
-});
 
 // Nodes => nodes !
 
