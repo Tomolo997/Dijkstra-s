@@ -21,9 +21,9 @@
   background-color: rgb(21, 141, 31) !important;
   cursor: pointer;
 }
-
 .endingNode {
   background-color: crimson !important;
+  color: grey;
 }
 
 .wall {

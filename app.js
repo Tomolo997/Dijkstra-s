@@ -102,15 +102,23 @@ let startingPoins = setStartingPoint(3, 3);
 const startNo = document.querySelector('.startingNode');
 const endNo = document.querySelector('.endingNode');
 startNo.draggable = true;
+endNo.draggable = true;
 let tpdragged;
-document.addEventListener('drag', function (event) {}, false);
+startNo.addEventListener('drag', function (event) {}, false);
+endNo.addEventListener('drag', function (event) {}, false);
 document.addEventListener(
   'dragstart',
   function (event) {
     // store a ref. on the dragged elem
     tpdragged = event.target;
+    if (event.target.classList.contains('startingNode')) {
+      event.target.classList.remove('startingNode');
+    } else {
+      event.target.classList.remove('endingNode');
+    }
+
+    console.log(tpdragged.classList);
     // make it half transparent
-    event.target.classList.remove('startingNode');
   },
   false
 );
@@ -136,7 +144,8 @@ document.addEventListener(
   function (event) {
     // highlight potential drop target when the draggable element enters it
     if (event.target.className == 'node') {
-      event.target.style.background = 'purple';
+      event.target.style.background = 'grey';
+      event.target.style.opacity = 1;
     }
   },
 
@@ -158,14 +167,23 @@ document.addEventListener(
   function (event) {
     // prevent default action (open as link for some elements)
     event.preventDefault();
+    console.log(event.target);
+
     // move dragged elem to the selected drop target
     if (event.target.className == 'node') {
-      event.target.style.background = '';
-      console.log(event.target.dataset.row, event.target.dataset.col);
-      startingPoins = setStartingPoint(
-        Number(event.target.dataset.row),
-        Number(event.target.dataset.col)
-      );
+      if (!nodes.find((el) => el.name.classList.contains('startingNode'))) {
+        event.target.style.background = '';
+        console.log(event.target.dataset.row, event.target.dataset.col);
+        startingPoins = setStartingPoint(
+          Number(event.target.dataset.row),
+          Number(event.target.dataset.col)
+        );
+      } else {
+        endPoint = setEndingPoint(
+          Number(event.target.dataset.row),
+          Number(event.target.dataset.col)
+        );
+      }
     }
   },
   false
