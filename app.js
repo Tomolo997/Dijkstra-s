@@ -53,7 +53,11 @@ window.onmousedown = function () {
   drawWall();
 };
 window.onmouseup = function () {
-  mouseisDown = false;
+  if (mouseisDown) {
+    mouseisDown = false;
+  } else {
+    mouseisDown = true;
+  }
   console.log(mouseisDown);
 };
 
@@ -94,6 +98,8 @@ const startNo = document.querySelector('.startingNode');
 const endNo = document.querySelector('.endingNode');
 startNo.draggable = true;
 endNo.draggable = true;
+const nodesDrag = document.querySelectorAll('.node');
+nodesDrag.forEach((el) => (el.draggable = false));
 let tpdragged;
 startNo.addEventListener('drag', function (event) {}, false);
 endNo.addEventListener('drag', function (event) {}, false);
@@ -136,7 +142,6 @@ document.addEventListener(
     // highlight potential drop target when the draggable element enters it
     if (event.target.className == 'node') {
       event.target.style.background = 'grey';
-      event.target.style.opacity = 1;
     }
   },
 
@@ -159,6 +164,7 @@ document.addEventListener(
     // prevent default action (open as link for some elements)
     event.preventDefault();
     console.log(event.target);
+    mouseisDown = false;
 
     // move dragged elem to the selected drop target
     if (event.target.className == 'node') {
@@ -176,7 +182,6 @@ document.addEventListener(
         );
       }
     }
-    mouseisDown = false;
   },
   false
 );
@@ -221,6 +226,10 @@ function dijkstra(grid, startingNode, endNode) {
     //dodamo wall ==>
     if (closestNode.name.classList.contains('wall')) continue;
     //če je closest node enak end nodu potem je SUCCSESS
+    // če se zaleti in nima več ven
+    if (closestNode.tentativeDistance === Infinity) {
+      return visitedNodes;
+    }
     visitedNodes.push(closestNode);
     if (closestNode === endNode) return visitedNodes;
     //updejtamo neighboure
