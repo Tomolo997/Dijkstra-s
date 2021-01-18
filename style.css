@@ -39,8 +39,8 @@
 
 .start__button {
   position: absolute;
-  right: 15rem;
-  top: 25rem;
+  right: 20rem;
+  top: 28rem;
 }
 
 .startDijsktra {
@@ -99,7 +99,7 @@
   width: 20rem;
   height: 20rem;
   position: absolute;
-  top: 10rem;
+  top: 6rem;
   right: 40rem;
   z-index: 1000;
   display: grid;
@@ -168,4 +168,13 @@
   width: 2rem;
   height: 2rem;
   background-color: rgb(208, 255, 0);
+}
+
+.tutorialText {
+  width: 40rem;
+  height: 20rem;
+  position: absolute;
+  top: 30rem;
+  right: 20rem;
+  z-index: 1000;
 }
