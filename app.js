@@ -4,8 +4,8 @@ const container = document.querySelector('.container');
 console.log(container);
 //make a grid
 export const nodes = [];
-const COLS = 20;
-const ROWS = 20;
+const COLS = 40;
+const ROWS = 40;
 function grid() {
   for (let i = 0; i < ROWS; i++) {
     for (let j = 0; j < COLS; j++) {
@@ -87,7 +87,7 @@ function drawWall() {
 
 //iterate skozi vse neighboure in jih pobarvaj rdeco
 
-let endPoint = setEndingPoint(10, 16);
+let endPoint = setEndingPoint(30, 25);
 let startingPoins = setStartingPoint(3, 3);
 
 //select the current staring point
