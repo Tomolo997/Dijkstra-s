@@ -12,8 +12,8 @@
 }
 
 .node {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 1rem;
+  height: 1rem;
   border: 1px solid grey;
 }
 
@@ -40,7 +40,7 @@
 .start__button {
   position: absolute;
   right: 20rem;
-  top: 28rem;
+  top: 25rem;
 }
 
 .startDijsktra {
@@ -100,7 +100,7 @@
   height: 20rem;
   position: absolute;
   top: 6rem;
-  right: 40rem;
+  right: 34rem;
   z-index: 1000;
   display: grid;
   grid-template-rows: repeat(4, 1fr);
@@ -174,7 +174,7 @@
   width: 40rem;
   height: 20rem;
   position: absolute;
-  top: 30rem;
-  right: 20rem;
+  top: 28rem;
+  right: 12rem;
   z-index: 1000;
 }
