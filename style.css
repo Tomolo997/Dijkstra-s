@@ -23,7 +23,7 @@
 }
 .endingNode {
   background-color: crimson !important;
-  color: grey;
+  cursor: pointer;
 }
 
 .wall {
