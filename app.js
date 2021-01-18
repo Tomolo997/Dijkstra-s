@@ -47,10 +47,18 @@ function setEndingPoint(rows, cols) {
 //when i click the node it must log
 let mouseisDown = false;
 let dragStartingNode = false;
-
+let mouseDown = 0;
+window.onmousedown = function () {
+  ++mouseDown;
+};
+window.onmouseup = function () {
+  --mouseDown;
+};
 container.addEventListener('mousedown', function () {
+  if (mouseDown > 0) {
+    drawWall();
+  }
   mouseisDown = true;
-  drawWall();
 });
 
 container.addEventListener('mouseup', function () {
@@ -92,28 +100,84 @@ let startingPoins = setStartingPoint(3, 3);
 //plan
 //select the staringNodePosition
 const startNo = document.querySelector('.startingNode');
+const endNo = document.querySelector('.endingNode');
 startNo.draggable = true;
-let dragged;
-startNo.addEventListener(
-  'drag',
+let tpdragged;
+document.addEventListener('drag', function (event) {}, false);
+document.addEventListener(
+  'dragstart',
   function (event) {
+    // store a ref. on the dragged elem
+    tpdragged = event.target;
+    // make it half transparent
     event.target.classList.remove('startingNode');
-    dragStartingNode = true;
   },
   false
 );
 
-container.addEventListener('mousedown', function (e) {
-  dragged = e.target;
-});
-startNo.addEventListener(
+document.addEventListener(
   'dragend',
   function (event) {
-    console.log(dragged);
-    dragged.classList.add('startingNode');
+    // reset the transparency
+    event.target.style.opacity = '';
   },
   false
 );
+document.addEventListener(
+  'dragover',
+  function (event) {
+    // prevent default to allow drop
+    event.preventDefault();
+  },
+  false
+);
+document.addEventListener(
+  'dragenter',
+  function (event) {
+    // highlight potential drop target when the draggable element enters it
+    if (event.target.className == 'node') {
+      event.target.style.background = 'purple';
+    }
+  },
+
+  false
+);
+document.addEventListener(
+  'dragleave',
+  function (event) {
+    // reset background of potential drop target when the draggable element leaves it
+    if (event.target.className == 'node') {
+      event.target.style.background = '';
+    }
+  },
+  false
+);
+
+document.addEventListener(
+  'drop',
+  function (event) {
+    // prevent default action (open as link for some elements)
+    event.preventDefault();
+    // move dragged elem to the selected drop target
+    if (event.target.className == 'node') {
+      event.target.style.background = '';
+      console.log(event.target.dataset.row, event.target.dataset.col);
+      startingPoins = setStartingPoint(
+        Number(event.target.dataset.row),
+        Number(event.target.dataset.col)
+      );
+    }
+  },
+  false
+);
+// startNo.addEventListener(
+//   'dragend',
+//   function (event) {
+//     console.log(tpdragged);
+//     tpdragged.name.classList.add('startingNode');
+//   },
+//   false
+// );
 
 //find neighbbour
 
