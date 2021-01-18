@@ -25,7 +25,6 @@ function grid() {
 }
 function init() {
   grid();
-  setEndingPoint(12, 16);
   //return
 }
 init();
@@ -44,11 +43,11 @@ function setEndingPoint(rows, cols) {
 
 //when i click the node it must log
 let mouseisDown = false;
-document.body.addEventListener('mousedown', function () {
+container.addEventListener('mousedown', function () {
   mouseisDown = true;
 });
 
-document.body.addEventListener('mouseup', function () {
+container.addEventListener('mouseup', function () {
   mouseisDown = false;
 });
 function mouseDraw() {
@@ -76,8 +75,25 @@ drawWall();
 
 //iterate skozi vse neighboure in jih pobarvaj rdeco
 
-let endPoint = setEndingPoint(12, 16);
+let endPoint = setEndingPoint(10, 16);
 let startingPoins = setStartingPoint(3, 3);
+
+const setStartingNode = document.querySelector('.setUpStartButton');
+
+setStartingNode.addEventListener('click', function (e) {
+  console.log(e);
+});
+
+const startingNode = document.querySelector('.startingNode');
+startingNode.addEventListener('mousedown', function (e) {
+  let mouseisDown = false;
+  document.body.addEventListener('mousedown', function () {});
+
+  document.body.addEventListener('mouseup', function () {
+    mouseisDown = false;
+    e.target.classList.add('startingNode');
+  });
+});
 
 // Nodes => nodes !
 
@@ -153,20 +169,20 @@ function getNodesInShortestPath(startNode) {
 }
 
 //TO DO
-//1. animate the neighbouring nodes that appear
+//1. [OK] animate the neighbouring nodes that appear
 //2. animate the shortest path
 //3. get starting and ending node to appear any where
 
 //1.Animate the neighboiuzrs nodest that appear
-
 function animateDijs() {
   const visitedNodes = dijkstra(nodes, startingPoins, endPoint);
+  //dijsktra returna vse visited nodese
+  //loopamo skozi vsakega in mu dodamo class listo visited z delajom
   for (let i = 0; i < visitedNodes.length; i++) {
     setTimeout(() => {
       const element = visitedNodes[i];
       element.name.classList.add('visited');
     }, 10 * i);
-    console.log(visitedNodes.length);
   }
 
   const shortestPath = getNodesInShortestPath(endPoint);
@@ -175,7 +191,7 @@ function animateDijs() {
       setTimeout(() => {
         const element = shortestPath[i];
         element.name.classList.add('shoretstPath');
-      }, 100 * i);
+      }, 50 * i);
     }
   }, 10 * visitedNodes.length);
 }

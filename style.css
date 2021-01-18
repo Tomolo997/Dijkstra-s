@@ -19,6 +19,7 @@
 
 .startingNode {
   background-color: rgb(21, 141, 31) !important;
+  cursor: pointer;
 }
 
 .endingNode {
@@ -26,6 +27,8 @@
 }
 
 .wall {
+  animation: wallAnimation 0.7s;
+
   background-color: rgb(55, 55, 80);
 }
 
@@ -78,4 +81,16 @@
 .shoretstPath {
   animation: animationPath 2s;
   background-color: rgb(208, 255, 0);
+}
+
+@keyframes wallAnimation {
+  from {
+    transform: scale(0.2);
+    background-color: rgba(153, 153, 172, 0.815);
+  }
+  to {
+    transform: scale(1);
+
+    background-color: rgb(55, 55, 80);
+  }
 }
