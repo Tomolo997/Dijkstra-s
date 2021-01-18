@@ -77,7 +77,7 @@ drawWall();
 //iterate skozi vse neighboure in jih pobarvaj rdeco
 
 let endPoint = setEndingPoint(12, 16);
-let startingPoins = setStartingPoint(12, 3);
+let startingPoins = setStartingPoint(3, 3);
 
 // Nodes => nodes !
 
@@ -89,13 +89,10 @@ function findNeighbour(currentNode) {
 
   //najdemo leve, desne neighgboure v nodes !
 
-  console.log(currentNode);
-
   neighbours.push(nodes.find((el) => el.row === row - 1 && el.col === col));
   neighbours.push(nodes.find((el) => el.row === row + 1 && el.col === col));
   neighbours.push(nodes.find((el) => el.row === row && el.col === col - 1));
   neighbours.push(nodes.find((el) => el.row === row && el.col === col + 1));
-  console.log(neighbours);
   return neighbours
     .filter((el) => el !== undefined)
     .filter((el) => (el.isVisited = true));
@@ -111,16 +108,13 @@ function dijkstra(grid, startingNode, endNode) {
     //sortamo node po distance => 0 gre na začetek za začetek, tako dobimo starting node kak začetek
     sortNodes(UNVisitedNodes);
     const closestNode = UNVisitedNodes.shift();
-    console.log(closestNode.isVisited);
     closestNode.isVisited = true;
-    //dodatamo closestnNodu visited =! true
 
     //dodamo wall ==>
     if (closestNode.name.classList.contains('wall')) continue;
-
     //če je closest node enak end nodu potem je SUCCSESS
-    closestNode.name.classList.add('visited');
-    if (closestNode === endNode) return 'yea';
+    visitedNodes.push(closestNode);
+    if (closestNode === endNode) return visitedNodes;
     //updejtamo neighboure
     updateNeighbours(closestNode, nodes);
   }
@@ -129,11 +123,7 @@ function dijkstra(grid, startingNode, endNode) {
 const start = document.querySelector('.startDijsktra');
 
 start.addEventListener('click', function (e) {
-  dijkstra(nodes, startingPoins, endPoint);
-  setTimeout(() => {
-    const shortestPath = getNodesInShortestPath(endPoint);
-    shortestPath.forEach((el) => el.name.classList.add('shoretstPath'));
-  }, 1000);
+  animateDijs();
 });
 
 //sortamo node, da dobimo 0 na začetku !
@@ -162,4 +152,22 @@ function getNodesInShortestPath(startNode) {
   return nodesShoretes;
 }
 
-function AnimateDijsktra(time) {}
+//TO DO
+//1. animate the neighbouring nodes that appear
+//2. animate the shortest path
+//3. get starting and ending node to appear any where
+
+//1.Animate the neighboiuzrs nodest that appear
+
+function animateDijs() {
+  const visitedNodes = dijkstra(nodes, startingPoins, endPoint);
+  console.log(visitedNodes);
+  for (let i = 0; i < visitedNodes.length; i++) {
+    setTimeout(() => {
+      const element = visitedNodes[i];
+      element.name.classList.add('visited');
+    }, 12 * i);
+  }
+  // const shortestPath = getNodesInShortestPath(endPoint);
+  // shortestPath.forEach((el) => el.name.classList.add('shoretstPath'));
+}

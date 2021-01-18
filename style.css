@@ -56,3 +56,9 @@
 .shoretstPath {
   background-color: yellow;
 }
+
+@keyframes preloader {
+  50% {
+    transform: rotate(360deg);
+  }
+}
