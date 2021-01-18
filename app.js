@@ -166,7 +166,7 @@ function animateDijs() {
     setTimeout(() => {
       const element = visitedNodes[i];
       element.name.classList.add('visited');
-    }, 12 * i);
+    }, 100 * i);
   }
   // const shortestPath = getNodesInShortestPath(endPoint);
   // shortestPath.forEach((el) => el.name.classList.add('shoretstPath'));

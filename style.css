@@ -30,7 +30,8 @@
 }
 
 .visited {
-  background-color: blue;
+  animation: mymove 2s;
+  background-color: rgba(46, 46, 177, 0.815);
 }
 
 .start__button {
@@ -57,8 +58,11 @@
   background-color: yellow;
 }
 
-@keyframes preloader {
-  50% {
-    transform: rotate(360deg);
+@keyframes mymove {
+  from {
+    background-color: rgb(208, 255, 0);
+  }
+  to {
+    background-color: rgba(46, 46, 177, 0.815);
   }
 }
