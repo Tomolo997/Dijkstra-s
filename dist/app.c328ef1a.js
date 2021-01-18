@@ -137,8 +137,8 @@ console.log(container); //make a grid
 
 var nodes = [];
 exports.nodes = nodes;
-var COLS = 20;
-var ROWS = 20;
+var COLS = 40;
+var ROWS = 40;
 
 function grid() {
   for (var i = 0; i < ROWS; i++) {
@@ -186,7 +186,6 @@ function setEndingPoint(rows, cols) {
 
 
 var mouseisDown = false;
-var dragStartingNode = false;
 
 window.onmousedown = function () {
   mouseisDown = true;
@@ -195,7 +194,12 @@ window.onmousedown = function () {
 };
 
 window.onmouseup = function () {
-  mouseisDown = false;
+  if (mouseisDown) {
+    mouseisDown = false;
+  } else {
+    mouseisDown = true;
+  }
+
   console.log(mouseisDown);
 };
 
@@ -220,7 +224,7 @@ function drawWall() {
 //iterate skozi vse neighboure in jih pobarvaj rdeco
 
 
-var endPoint = setEndingPoint(10, 16);
+var endPoint = setEndingPoint(30, 25);
 var startingPoins = setStartingPoint(3, 3); //select the current staring point
 //plan
 //select the staringNodePosition
@@ -229,6 +233,10 @@ var startNo = document.querySelector('.startingNode');
 var endNo = document.querySelector('.endingNode');
 startNo.draggable = true;
 endNo.draggable = true;
+var nodesDrag = document.querySelectorAll('.node');
+nodesDrag.forEach(function (el) {
+  return el.draggable = false;
+});
 var tpdragged;
 startNo.addEventListener('drag', function (event) {}, false);
 endNo.addEventListener('drag', function (event) {}, false);
@@ -256,7 +264,6 @@ document.addEventListener('dragenter', function (event) {
   // highlight potential drop target when the draggable element enters it
   if (event.target.className == 'node') {
     event.target.style.background = 'grey';
-    event.target.style.opacity = 1;
   }
 }, false);
 document.addEventListener('dragleave', function (event) {
@@ -280,9 +287,9 @@ document.addEventListener('drop', function (event) {
     } else {
       endPoint = setEndingPoint(Number(event.target.dataset.row), Number(event.target.dataset.col));
     }
-  }
 
-  mouseisDown = false;
+    mouseisDown = false;
+  }
 }, false); // startNo.addEventListener(
 //   'dragend',
 //   function (event) {
@@ -329,6 +336,11 @@ function dijkstra(grid, startingNode, endNode) {
     closestNode.isVisited = true; //dodamo wall ==>
 
     if (closestNode.name.classList.contains('wall')) continue; //če je closest node enak end nodu potem je SUCCSESS
+    // če se zaleti in nima več ven
+
+    if (closestNode.tentativeDistance === Infinity) {
+      return visitedNodes;
+    }
 
     visitedNodes.push(closestNode);
     if (closestNode === endNode) return visitedNodes; //updejtamo neighboure
@@ -443,7 +455,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59965" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58770" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

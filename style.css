@@ -64,7 +64,7 @@
     background-color: rgba(111, 165, 209, 0.836);
   }
   to {
-    transform: scale(1.1);
+    transform: scale(1);
     background-color: rgba(46, 46, 177, 0.815);
   }
 }

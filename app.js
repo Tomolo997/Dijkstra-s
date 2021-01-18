@@ -46,7 +46,6 @@ function setEndingPoint(rows, cols) {
 
 //when i click the node it must log
 let mouseisDown = false;
-let dragStartingNode = false;
 window.onmousedown = function () {
   mouseisDown = true;
   console.log(mouseisDown);
@@ -107,6 +106,7 @@ document.addEventListener(
   'dragstart',
   function (event) {
     // store a ref. on the dragged elem
+
     tpdragged = event.target;
     if (event.target.classList.contains('startingNode')) {
       event.target.classList.remove('startingNode');
@@ -164,7 +164,6 @@ document.addEventListener(
     // prevent default action (open as link for some elements)
     event.preventDefault();
     console.log(event.target);
-    mouseisDown = false;
 
     // move dragged elem to the selected drop target
     if (event.target.className == 'node') {
@@ -181,6 +180,7 @@ document.addEventListener(
           Number(event.target.dataset.col)
         );
       }
+      mouseisDown = false;
     }
   },
   false
