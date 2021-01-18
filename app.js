@@ -47,23 +47,16 @@ function setEndingPoint(rows, cols) {
 //when i click the node it must log
 let mouseisDown = false;
 let dragStartingNode = false;
-let mouseDown = 0;
 window.onmousedown = function () {
-  ++mouseDown;
+  mouseisDown = true;
+  console.log(mouseisDown);
+  drawWall();
 };
 window.onmouseup = function () {
-  --mouseDown;
-};
-container.addEventListener('mousedown', function () {
-  if (mouseDown > 0) {
-    drawWall();
-  }
-  mouseisDown = true;
-});
-
-container.addEventListener('mouseup', function () {
   mouseisDown = false;
-});
+  console.log(mouseisDown);
+};
+
 function mouseDraw() {
   if (mouseisDown) {
     nodes.forEach((el) =>
@@ -80,9 +73,7 @@ function mouseDraw() {
   }
 }
 function drawWall() {
-  if (mouseisDown && !dragStartingNode) {
-    mouseDraw();
-  } else return;
+  mouseDraw();
 }
 
 //djkstra Algo
@@ -113,7 +104,7 @@ document.addEventListener(
     tpdragged = event.target;
     if (event.target.classList.contains('startingNode')) {
       event.target.classList.remove('startingNode');
-    } else {
+    } else if (event.target.classList.contains('endingNode')) {
       event.target.classList.remove('endingNode');
     }
 
@@ -185,6 +176,7 @@ document.addEventListener(
         );
       }
     }
+    mouseisDown = false;
   },
   false
 );
