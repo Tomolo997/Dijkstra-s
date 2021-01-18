@@ -30,7 +30,7 @@
 }
 
 .visited {
-  animation: mymove 2s;
+  animation: animationVisited 2s;
   background-color: rgba(46, 46, 177, 0.815);
 }
 
@@ -54,15 +54,28 @@
   color: red;
   border: 1px solid red;
 }
-.shoretstPath {
-  background-color: yellow;
-}
 
-@keyframes mymove {
+@keyframes animationVisited {
   from {
+    transform: scale(0.4);
     background-color: rgb(208, 255, 0);
   }
   to {
+    transform: scale(1);
     background-color: rgba(46, 46, 177, 0.815);
   }
+}
+
+@keyframes animationPath {
+  from {
+    background-color: rgba(46, 46, 177, 0.815);
+  }
+  to {
+    background-color: rgb(208, 255, 0);
+  }
+}
+
+.shoretstPath {
+  animation: animationPath 2s;
+  background-color: rgb(208, 255, 0);
 }

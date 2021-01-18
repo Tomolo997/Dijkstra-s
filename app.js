@@ -161,13 +161,21 @@ function getNodesInShortestPath(startNode) {
 
 function animateDijs() {
   const visitedNodes = dijkstra(nodes, startingPoins, endPoint);
-  console.log(visitedNodes);
   for (let i = 0; i < visitedNodes.length; i++) {
     setTimeout(() => {
       const element = visitedNodes[i];
       element.name.classList.add('visited');
-    }, 100 * i);
+    }, 10 * i);
+    console.log(visitedNodes.length);
   }
-  // const shortestPath = getNodesInShortestPath(endPoint);
-  // shortestPath.forEach((el) => el.name.classList.add('shoretstPath'));
+
+  const shortestPath = getNodesInShortestPath(endPoint);
+  setTimeout(() => {
+    for (let i = shortestPath.length - 1; i >= 0; i--) {
+      setTimeout(() => {
+        const element = shortestPath[i];
+        element.name.classList.add('shoretstPath');
+      }, 100 * i);
+    }
+  }, 10 * visitedNodes.length);
 }
