@@ -61,10 +61,10 @@
 @keyframes animationVisited {
   from {
     transform: scale(0.4);
-    background-color: rgb(208, 255, 0);
+    background-color: rgba(111, 165, 209, 0.836);
   }
   to {
-    transform: scale(1);
+    transform: scale(1.1);
     background-color: rgba(46, 46, 177, 0.815);
   }
 }
@@ -93,4 +93,79 @@
 
     background-color: rgb(55, 55, 80);
   }
+}
+
+.tutorial {
+  width: 20rem;
+  height: 20rem;
+  position: absolute;
+  top: 10rem;
+  right: 40rem;
+  z-index: 1000;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+}
+.startNodeTut {
+  grid-row: 1/2;
+}
+.blockStart {
+  margin-right: 2rem;
+  margin-left: 2rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: rgb(21, 141, 31);
+}
+.blockStartLegend {
+  color: black;
+  font-size: 1.6rem;
+}
+
+.tutoFlex {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.blockEnd {
+  margin-right: 2rem;
+  margin-left: 2rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: crimson;
+}
+
+.endNodeTut {
+  grid-row: 2/3;
+}
+.blockEndLegend {
+  color: black;
+  font-size: 1.6rem;
+}
+.blockwall {
+  margin-right: 2rem;
+  margin-left: 2rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: rgb(55, 55, 80);
+}
+.tutWall {
+  grid-row: 3/4;
+}
+.visitedTuto {
+  grid-row: 4/5;
+}
+
+.blockVisited {
+  margin-right: 2rem;
+  margin-left: 2rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: rgba(46, 46, 177, 0.815);
+}
+.blockShortest {
+  margin-right: 2rem;
+  margin-left: 2rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: rgb(208, 255, 0);
 }
