@@ -57,17 +57,19 @@ container.addEventListener('mouseup', function () {
   mouseisDown = false;
 });
 function mouseDraw() {
-  nodes.forEach((el) =>
-    el.name.addEventListener('mousemove', function (e) {
-      if (
-        mouseisDown &&
-        !el.name.classList.contains('startingNode') &&
-        !el.name.classList.contains('endingNode')
-      ) {
-        e.target.classList.add('wall');
-      }
-    })
-  );
+  if (mouseisDown) {
+    nodes.forEach((el) =>
+      el.name.addEventListener('mousemove', function (e) {
+        if (
+          mouseisDown &&
+          !el.name.classList.contains('startingNode') &&
+          !el.name.classList.contains('endingNode')
+        ) {
+          e.target.classList.add('wall');
+        }
+      })
+    );
+  }
 }
 function drawWall() {
   if (mouseisDown && !dragStartingNode) {
@@ -86,21 +88,32 @@ let endPoint = setEndingPoint(10, 16);
 let startingPoins = setStartingPoint(3, 3);
 
 //select the current staring point
-const startingNodePosition = document.querySelector('.startingNode');
-startingNodePosition.addEventListener('mousedown', function (e) {
-  mouseisDown = false;
-  dragStartingNode = true;
-});
-
-container.addEventListener('mouseup', function (e) {
-  console.log(e);
-  if (dragStartingNode) {
-    dragStartingNode = false;
-  }
-});
 
 //plan
 //select the staringNodePosition
+const startNo = document.querySelector('.startingNode');
+startNo.draggable = true;
+let dragged;
+startNo.addEventListener(
+  'drag',
+  function (event) {
+    event.target.classList.remove('startingNode');
+    dragStartingNode = true;
+  },
+  false
+);
+
+container.addEventListener('mousedown', function (e) {
+  dragged = e.target;
+});
+startNo.addEventListener(
+  'dragend',
+  function (event) {
+    console.log(dragged);
+    dragged.classList.add('startingNode');
+  },
+  false
+);
 
 //find neighbbour
 
