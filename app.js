@@ -1,4 +1,5 @@
 //select a container
+
 const container = document.querySelector('.container');
 console.log(container);
 //make a grid
@@ -45,8 +46,11 @@ function setEndingPoint(rows, cols) {
 
 //when i click the node it must log
 let mouseisDown = false;
+let dragStartingNode = false;
+
 container.addEventListener('mousedown', function () {
   mouseisDown = true;
+  drawWall();
 });
 
 container.addEventListener('mouseup', function () {
@@ -66,9 +70,10 @@ function mouseDraw() {
   );
 }
 function drawWall() {
-  mouseDraw();
+  if (mouseisDown && !dragStartingNode) {
+    mouseDraw();
+  } else return;
 }
-drawWall();
 
 //djkstra Algo
 // const t = setInterval(() => {
@@ -80,7 +85,22 @@ drawWall();
 let endPoint = setEndingPoint(10, 16);
 let startingPoins = setStartingPoint(3, 3);
 
-// Nodes => nodes !
+//select the current staring point
+const startingNodePosition = document.querySelector('.startingNode');
+startingNodePosition.addEventListener('mousedown', function (e) {
+  mouseisDown = false;
+  dragStartingNode = true;
+});
+
+container.addEventListener('mouseup', function (e) {
+  console.log(e);
+  if (dragStartingNode) {
+    dragStartingNode = false;
+  }
+});
+
+//plan
+//select the staringNodePosition
 
 //find neighbbour
 
