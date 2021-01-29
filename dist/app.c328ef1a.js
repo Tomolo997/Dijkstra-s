@@ -258,6 +258,8 @@ document.addEventListener('dragstart', function (event) {
     event.target.classList.remove('endingNode');
   } else if (event.target.classList.contains('wall')) {
     event.preventDefault();
+  } else if (event.target.classList.contains('wall')) {
+    event.preventDefault();
   } // make it half transparent
 
 }, false);
@@ -273,8 +275,6 @@ document.addEventListener('dragenter', function (event) {
   // highlight potential drop target when the draggable element enters it
   if (event.target.className == 'node') {
     event.target.style.background = 'grey';
-  } else if (event.target.classList.contains('wall')) {
-    return;
   }
 }, false);
 document.addEventListener('dragleave', function (event) {
@@ -300,6 +300,7 @@ document.addEventListener('drop', function (event) {
     }
 
     mouseisDown = false;
+    console.log(mouseisDown);
   }
 }, false); // startNo.addEventListener(
 //   'dragend',
@@ -309,6 +310,7 @@ document.addEventListener('drop', function (event) {
 //   },
 //   false
 // );
+//DIJKSTRA ALOG
 //find neighbbour
 
 function findNeighbour(currentNode) {
@@ -466,7 +468,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53875" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57104" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

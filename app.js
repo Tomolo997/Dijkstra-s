@@ -50,7 +50,6 @@ let drawingWall = false;
 window.onmousedown = function (e) {
   mouseisDown = true;
   drawingWall = true;
-
   if (drawingWall) {
     drawWall();
   }
@@ -121,6 +120,8 @@ document.addEventListener(
       event.target.classList.remove('endingNode');
     } else if (event.target.classList.contains('wall')) {
       event.preventDefault();
+    } else if (event.target.classList.contains('wall')) {
+      event.preventDefault();
     }
     // make it half transparent
   },
@@ -149,8 +150,6 @@ document.addEventListener(
     // highlight potential drop target when the draggable element enters it
     if (event.target.className == 'node') {
       event.target.style.background = 'grey';
-    } else if (event.target.classList.contains('wall')) {
-      return;
     }
   },
 
@@ -190,6 +189,7 @@ document.addEventListener(
         );
       }
       mouseisDown = false;
+      console.log(mouseisDown);
     }
   },
   false
@@ -203,6 +203,7 @@ document.addEventListener(
 //   false
 // );
 
+//DIJKSTRA ALOG
 //find neighbbour
 
 function findNeighbour(currentNode) {
