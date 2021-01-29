@@ -186,11 +186,17 @@ function setEndingPoint(rows, cols) {
 
 
 var mouseisDown = false;
+var drawingWall = false;
 
-window.onmousedown = function () {
+window.onmousedown = function (e) {
   mouseisDown = true;
+  drawingWall = true;
+
+  if (drawingWall) {
+    drawWall();
+  }
+
   console.log(mouseisDown);
-  drawWall();
 };
 
 window.onmouseup = function () {
@@ -204,7 +210,7 @@ window.onmouseup = function () {
 };
 
 function mouseDraw() {
-  if (mouseisDown) {
+  if (mouseisDown && drawingWall) {
     nodes.forEach(function (el) {
       return el.name.addEventListener('mousemove', function (e) {
         if (mouseisDown && !el.name.classList.contains('startingNode') && !el.name.classList.contains('endingNode')) {
@@ -231,26 +237,29 @@ var startingPoins = setStartingPoint(3, 3); //select the current staring point
 
 var startNo = document.querySelector('.startingNode');
 var endNo = document.querySelector('.endingNode');
-startNo.draggable = true;
-endNo.draggable = true;
 var nodesDrag = document.querySelectorAll('.node');
 nodesDrag.forEach(function (el) {
   return el.draggable = false;
 });
+startNo.draggable = true;
+endNo.draggable = true;
 var tpdragged;
 startNo.addEventListener('drag', function (event) {}, false);
 endNo.addEventListener('drag', function (event) {}, false);
 document.addEventListener('dragstart', function (event) {
   // store a ref. on the dragged elem
   tpdragged = event.target;
+  console.log(tpdragged);
 
   if (event.target.classList.contains('startingNode')) {
+    console.log(event.target);
     event.target.classList.remove('startingNode');
   } else if (event.target.classList.contains('endingNode')) {
     event.target.classList.remove('endingNode');
-  }
+  } else if (event.target.classList.contains('wall')) {
+    event.preventDefault();
+  } // make it half transparent
 
-  console.log(tpdragged.classList); // make it half transparent
 }, false);
 document.addEventListener('dragend', function (event) {
   // reset the transparency
@@ -264,6 +273,8 @@ document.addEventListener('dragenter', function (event) {
   // highlight potential drop target when the draggable element enters it
   if (event.target.className == 'node') {
     event.target.style.background = 'grey';
+  } else if (event.target.classList.contains('wall')) {
+    return;
   }
 }, false);
 document.addEventListener('dragleave', function (event) {
@@ -455,7 +466,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59898" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53875" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

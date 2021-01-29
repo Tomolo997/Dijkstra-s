@@ -46,10 +46,15 @@ function setEndingPoint(rows, cols) {
 
 //when i click the node it must log
 let mouseisDown = false;
-window.onmousedown = function () {
+let drawingWall = false;
+window.onmousedown = function (e) {
   mouseisDown = true;
+  drawingWall = true;
+
+  if (drawingWall) {
+    drawWall();
+  }
   console.log(mouseisDown);
-  drawWall();
 };
 window.onmouseup = function () {
   if (mouseisDown) {
@@ -61,7 +66,7 @@ window.onmouseup = function () {
 };
 
 function mouseDraw() {
-  if (mouseisDown) {
+  if (mouseisDown && drawingWall) {
     nodes.forEach((el) =>
       el.name.addEventListener('mousemove', function (e) {
         if (
@@ -95,10 +100,10 @@ let startingPoins = setStartingPoint(3, 3);
 //select the staringNodePosition
 const startNo = document.querySelector('.startingNode');
 const endNo = document.querySelector('.endingNode');
-startNo.draggable = true;
-endNo.draggable = true;
 const nodesDrag = document.querySelectorAll('.node');
 nodesDrag.forEach((el) => (el.draggable = false));
+startNo.draggable = true;
+endNo.draggable = true;
 let tpdragged;
 startNo.addEventListener('drag', function (event) {}, false);
 endNo.addEventListener('drag', function (event) {}, false);
@@ -108,13 +113,15 @@ document.addEventListener(
     // store a ref. on the dragged elem
 
     tpdragged = event.target;
+    console.log(tpdragged);
     if (event.target.classList.contains('startingNode')) {
+      console.log(event.target);
       event.target.classList.remove('startingNode');
     } else if (event.target.classList.contains('endingNode')) {
       event.target.classList.remove('endingNode');
+    } else if (event.target.classList.contains('wall')) {
+      event.preventDefault();
     }
-
-    console.log(tpdragged.classList);
     // make it half transparent
   },
   false
@@ -142,6 +149,8 @@ document.addEventListener(
     // highlight potential drop target when the draggable element enters it
     if (event.target.className == 'node') {
       event.target.style.background = 'grey';
+    } else if (event.target.classList.contains('wall')) {
+      return;
     }
   },
 
